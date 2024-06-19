@@ -41,66 +41,18 @@ export default function RestaurantScreen() {
                 const data = await response.json();
                 const featuredArray = await data.results;
                 setDishes(featuredArray);
-                console.log("==============res", featuredArray2[0], featuredArray2[0].image);
-                console.log("==============dishes", featuredArray, featuredArray2[0].image);
-
-
 
             } catch (error) {
                 console.error("Error fetching data2: ", error);
             }
         };
 
-        // const fetchData2 = async () => {
-        //     try {
-        //         const response = await fetch(`http://172.29.16.1:3000/restaurant/${id}`);
-        //         // You should do something with the response here
-        //         const data = await response.json();
-        //         const featuredArray = await data.results;
-        //         console.log("==============", featuredArray);
-        //         console.log(featuredArray[0].image);
-        //         setRes(featuredArray);
-        //     } catch (error) {
-        //         console.error("Error fetching data: ", error);
-        //     }
-        // };
+
 
         fetchData();
         //fetchData2();
     }, []);
-    // // const res=[];
-    // useEffect(() => {
-    //     const fetchData = async () => {
-    //         const urls = [
-    //             `http://172.29.16.1:3000/restaurantDetails/${id}`,
-    //             `http://172.29.16.1:3000/restaurant/${id}`,
-    //         ];
 
-    //         try {
-    //             const responses = await Promise.all(urls.map(url => fetch(url)));
-    //             const data = await Promise.all(responses.map(response => {
-    //                 if (!response.ok) {
-    //                     throw new Error(`HTTP error! status: ${response.status}`);
-    //                 }
-    //                 return response.json();
-    //             }));
-    //             if (data[0] && data[0].results) {
-    //                 console.log(data[0].results.name);
-    //             }
-    //             else console.log("no data");
-    //             console.log("==============", data[0].results);
-    //             console.log("==============", data[1].results);
-    //             // data is now an array of responses, you can access each response like this:
-    //             setDishes(data[0].results);
-    //             setRes(data[1].results);
-
-    //         } catch (error) {
-    //             console.log('There was a problem with the fetch operation: ' + error.message);
-    //         }
-    //     };
-
-    //     fetchData();
-    // }, []);
     return (
         <View className='flex-1'>
             <StatusBar barStyle="light-content" />
@@ -111,7 +63,6 @@ export default function RestaurantScreen() {
                     paddingBottom: 100
                 }}>
                 <View className="relative">
-                    {console.log("this is res ======== ", res)}
                     <StatusBar themeColors='white'></StatusBar>
                     {res[0] && <Image source={{ uri: res[0].image }} style={{ width: screenWidth, height: 100 }} />}
                     <TouchableOpacity

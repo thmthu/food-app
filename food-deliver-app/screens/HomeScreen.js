@@ -1,32 +1,16 @@
-import { View, Text, TextInput, ScrollView, StatusBar, Image, StyleSheet } from 'react-native'
+import { View, Text, TextInput, ScrollView, StatusBar, Image, StyleSheet, TouchableOpacity } from 'react-native'
 import React, { useEffect, useState } from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context'
 import * as Icon from "react-native-feather"
 import { themeColors } from '../theme'
 import Catagories from '../components/Catagories'
-import { featured } from '../constants'
 import FeatureRow from '../components/FeatureRow'
-const styles = StyleSheet.create({
-    logo: {
-        height: 164,
-        width: 64,
-        resizeMode: 'contain', // This will ensure the image is resized to fit within the dimensions provided
-    },
-});
-const stylesCart = StyleSheet.create({
-    container: {
-        width: 120,
-        borderRadius: 10,
-    },
-    img: {
-        width: 120,
-        height: 50,
-
-    }
-})
+import { useNavigation } from '@react-navigation/native';
+import { useDispatch, useSelector } from 'react-redux';
+import { selectEmail } from '../slices/emailSlice';
 export default function HomeScreen() {
     const [featured2, setFeatured] = useState([]);
-
+    const navi = useNavigation();
     useEffect(() => {
         const fetchData = async () => {
             try {
@@ -49,6 +33,7 @@ export default function HomeScreen() {
                 barStyle={'dark-content'}
             // hidden={hidden}
             />
+
             <View className="flex-row items-center space-x-2 px-4 mt-3 pb-4 ">
                 <View className=" flex-row flex-1 items-center  px-1 pb-1.5 gap-2 rounded-full border border-slate-400">
                     <Icon.Search stroke="gray" width={15} height={15} />
@@ -58,9 +43,9 @@ export default function HomeScreen() {
                         <Text>HCM</Text>
                     </View>
                 </View>
-                <View style={{ backgroundColor: themeColors.bgColor(1) }} className="p-3 bg-gray-300 rounded-full">
-                    <Icon.Sliders strokeWidth={2.5} stroke="white" width={20} height={20} />
-                </View>
+                <TouchableOpacity onPress={() => navi.navigate('LogIn')} style={{ backgroundColor: themeColors.bgColor(1) }} className="p-3 bg-gray-300 rounded-full">
+                    <Icon.LogOut strokeWidth={2.5} stroke="white" width={20} height={20} />
+                </TouchableOpacity>
             </View>
             <ScrollView
                 showsVerticalScrollIndicator={false}

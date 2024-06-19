@@ -6,16 +6,52 @@ import { useNavigation } from '@react-navigation/native'
 import { selectRestaurant } from '../slices/restaurantSlice'
 import { useDispatch, useSelector } from 'react-redux'
 import { removeFromCart, selectItems } from '../slices/cartSlice'
-
+import { selectEmail } from '../slices/emailSlice'
 export default function CartScreen() {
     const navi = useNavigation();
-    //const res = useSelector(selectRestaurant)
-    // Correct usage
     const res = useSelector(state => selectRestaurant(state));
     const items = useSelector(selectItems);
     const [listItems, setListItems] = useState({});
     const [total, setTotal] = useState(0);
     const dispatch = useDispatch()
+    const email = useSelector(state => selectEmail(state));
+
+    const handlePress = async () => {
+        // Create an array from listItems to store the bill details
+        const billDetails = Object.entries(listItems).map(([dish_id, items]) => ({
+            dish_id,
+            quantity: items.length,
+            price: items[0].price
+        }));
+
+        // Create an object to send in the body of the fetch API request
+        const billInfo = {
+            email,
+            total,
+            billDetails
+        };
+
+        try {
+            // Send a POST request to the server
+            const response = await fetch('http://172.29.16.1:3000/bill', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(billInfo)
+            });
+
+            // Check if the request was successful
+            if (!response.ok) {
+                throw new Error('HTTP error ' + response.status);
+            }
+
+            // Navigate to the WaitScreen
+            navi.navigate('WaitScreen');
+        } catch (error) {
+            console.error('Failed to fetch API', error);
+        }
+    }
     useEffect(() => {
         const temp = items.reduce((group, item) => {
             if (group[item.id])
@@ -94,7 +130,7 @@ export default function CartScreen() {
                     <Text className="font-bold"> ${total + 2}</Text>
                 </View>
                 <TouchableOpacity
-                    onPress={() => navi.navigate('WaitScreen')}
+                    onPress={handlePress}
                     style={{ backgroundColor: themeColors.bgColor(1) }}
                     className="rounded-3xl w-full p-3">
                     <Text className="text-white font-extrabold text-xl text-center"> Place Order</Text>
