@@ -13,15 +13,7 @@ export default function SignUpScreen() {
         setMessage(mess);
         setShowMessage(isShow);
     }
-    const handleChange = (label) => (text) => {
-        if (label === 'Email') {
-            setFirstName(text);
-        }
-    };
 
-    const handleBlur = (label) => (event) => {
-        // handle blur event
-    };
     const handleSubmit = async (values) => {
         try {
             if (values.email == "" || values.password == "" || values.user == "" || values.address == "") {
@@ -101,7 +93,7 @@ export default function SignUpScreen() {
                             icon="location"
                             handleChange={handleChange}
                             handleBlur={handleBlur}
-                            placeholder="asley@gmail.com"
+                            placeholder="address"
                             placeholderTextColor="gray"
                             onChangeText={handleChange('address')}
                             onBlur={handleBlur('address')}

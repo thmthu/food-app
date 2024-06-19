@@ -56,8 +56,8 @@ const bill = async (req, res) => {
         // Insert into BillDetails table
         for (let detail of billDetails) {
             await connection.query(
-                'INSERT INTO BillDetails (bill_id, dish_id, price, quantity) VALUES (?,?,?,?)',
-                [billId, detail.dish_id, detail.price, detail.quantity]
+                'INSERT INTO BillDetails (bill_id, dish_id, quantity) VALUES (?,?,?)',
+                [billId, detail.dish_id, detail.quantity]
             );
         }
 

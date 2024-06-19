@@ -13,15 +13,7 @@ export default function LoginScreen() {
     const [message, setMessage] = useState("");
     const [isShowMess, setShowMessage] = useState(false);
 
-    const handleChange = (label) => (text) => {
-        if (label === 'Email') {
-            setFirstName(text);
-        }
-    };
 
-    const handleBlur = (label) => (event) => {
-        // handle blur event
-    };
     const handlleMessage = (mess, isShow) => {
         setMessage(mess);
         setShowMessage(isShow);
@@ -44,6 +36,8 @@ export default function LoginScreen() {
                 handlleMessage("Login successful", true);
                 dispatch(setEmail(values.email)); // Save the user's email in the Redux store
                 navi.navigate('Home', { email: values.email });
+                handlleMessage("", true);
+
             } else {
                 handlleMessage("Login failed. Username or password is incorrect", true);
                 console.log('Request failed');
